@@ -1,6 +1,5 @@
 import React from 'react'
 import Navbar from './components/Navbar'
-import Manager from './components/Manager'
 import Password from './components/Password'
 const App = () => {
   return (
