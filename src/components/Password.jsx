@@ -27,11 +27,12 @@ const Password = () => {
     function handleCopy(item){
       navigator.clipboard.writeText(item);
     }
-    function handleDelete(itemTOdelete){
-      const updatedPasswords = savePassword.filter((item,index) => itemTOdelete.key !== item.index);
+    function handleDelete(itemToDelete) {
+      const updatedPasswords = savePassword.filter((item) => item.site !== itemToDelete.site || item.username !== itemToDelete.username || item.password !== itemToDelete.password);
       setSavePassword(updatedPasswords);
       localStorage.setItem('DataAll', JSON.stringify(updatedPasswords));
     }
+    
     function handleEdit(itemEdit){
       setData({ site: itemEdit.site, username: itemEdit.username, password: itemEdit.password });
       const updatedPasswords = savePassword.filter((item) => item !== itemEdit);
@@ -109,7 +110,7 @@ const Password = () => {
      
       <td class="px-6 py-4">
       <div className='flex items-center gap-3'>
-        <span>{item.site}</span>
+        <a href={item.site} target="_blank"><span>{item.site}</span></a>
         <img onClick={()=>{handleCopy(item.site);
            toast.success("Copied to clipboard");
         }}className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
