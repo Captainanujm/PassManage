@@ -8,6 +8,7 @@ const Password = () => {
      const updatedData=[...savedData,data]
       setSavePassword(updatedData);
       localStorage.setItem('passwordData', JSON.stringify(updatedData));
+      setData({ site: "", username: "", password: "" });
     
     }
     function handleChange(e){
@@ -17,9 +18,12 @@ const Password = () => {
     function handleClick(){
         setIsHidden(!isHidden);
     }
+    function handleCopy(item){
+      
+    }
   return (
-    <div className="flex justify-center items-center max-h-[screen] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-  <div className="bg-white max-w-4xl w-full h-full shadow-2xl rounded-3xl p-10 flex flex-col">
+    <div className="flex p-2 min-w-[720px] max-w-[720px] min-h-[610px] max-h-[610px]  justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+  <div className="bg-white min-w-[710px] max-w-[710px] min-h-[600px] max-h-[600px] shadow-2xl rounded-3xl p-10 flex flex-col">
     <div className="text-black flex flex-col gap-6 items-center justify-center mb-10">
       <h1 className="text-3xl font-semibold text-indigo-700 mb-4">PassManage</h1>
       
@@ -62,41 +66,61 @@ const Password = () => {
         
         <button
           onClick={handleAdd}
-          className="w-full bg-indigo-600 text-white p-4 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 transition"
+          className="w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-4 rounded-xl hover:bg-indigo-700 focus:outline-none active:scale-95 active:opacity-105"
         >
           Add Password
         </button>
       </div>
     </div>
     
-    {/* Table Section */}
-    <div className="flex-1 overflow-auto">
-      <div className="bg-gray-50 p-6 rounded-xl shadow-lg">
-        <table className="min-w-full table-auto text-sm text-gray-700">
-          <thead className="bg-indigo-600 text-white">
-            <tr>
-              <th className="px-6 py-4 text-left">Website URL</th>
-              <th className="px-6 py-4 text-left">Username</th>
-              <th className="px-6 py-4 text-left">Passwords</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {savePassword.map((item, index) => (
-              <tr
-                key={index}
-                className={`transition-all duration-300 hover:bg-indigo-50 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
-              >
-                <td className="px-6 py-4">{item.site}</td>
-                <td className="px-6 py-4">{item.username}</td>
-                <td className="px-6 py-4">{item.password}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+   <div className=" max-h-[900px] max-w-[1000px] overflow-auto scrollbar-hide">
+   <table class="table-auto w-full border-collapse border border-gray-300 text-sm text-left shadow-lg rounded-lg overflow-hidden">
+  <thead class="bg-indigo-600 text-white">
+    <tr>
+      <th class="px-6 py-4">Website URL</th>
+      <th class="px-6 py-4">Username</th>
+      <th class="px-6 py-4">Password</th>
+    </tr>
+  </thead>
+  <tbody class="divide-y divide-gray-200">
+  
+  
+  {savePassword.map((item, index) => {
+  return (
+    <tr class="hover:bg-indigo-50 transition-colors">
+     
+      <td class="px-6 py-4">
+      <div className='flex items-center'>
+        <span>{item.site}</span>
+        <img className="w-5 h-5" src='../../public/copy_10573585.png'/>
       </div>
+      </td>
+      <td class="px-6 py-4">
+      <div className='flex items-center'>
+        <span>{item.username}</span>
+        <img className="w-5 h-5" src='../../public/copy_10573585.png'/>
+      </div>
+      </td>
+      <td class="px-6 py-4">
+      <div className='flex items-center'>
+        <span>{item.password}</span>
+        <img className="w-5 h-5" src='../../public/copy_10573585.png'/>
+      </div>
+      </td>
+   
+  </tr>
+  )
+})}
+    
+    
+    
+  </tbody>
+</table>
+
+   </div>
+
     </div>
   </div>
-</div>
 
   
   )
