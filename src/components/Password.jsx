@@ -1,13 +1,17 @@
 import React from 'react'
-import { useRef,useState } from 'react'
+import { useRef,useState,useEffect } from 'react'
 const Password = () => {
     const [data,setData]=useState({site:"",username:"",password:""});
     const [savePassword,setSavePassword]=useState([]);
+    useEffect(() => {
+      const savedData = JSON.parse(localStorage.getItem('DataAll') || '[]');
+      setSavePassword(savedData);
+    }, []); 
     function handleAdd(){
-     const savedData=JSON.parse(localStorage.getItem('passwordData')||JSON.stringify([]));
+     const savedData=JSON.parse(localStorage.getItem('DataAll')||JSON.stringify([]));
      const updatedData=[...savedData,data]
       setSavePassword(updatedData);
-      localStorage.setItem('passwordData', JSON.stringify(updatedData));
+      localStorage.setItem('DataAll', JSON.stringify(updatedData));
       setData({ site: "", username: "", password: "" });
     
     }
@@ -90,21 +94,21 @@ const Password = () => {
     <tr class="hover:bg-indigo-50 transition-colors">
      
       <td class="px-6 py-4">
-      <div className='flex items-center'>
+      <div className='flex items-center gap-3'>
         <span>{item.site}</span>
-        <img className="w-5 h-5" src='../../public/copy_10573585.png'/>
+        <img className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
       </div>
       </td>
       <td class="px-6 py-4">
-      <div className='flex items-center'>
+      <div className='flex items-center gap-3'>
         <span>{item.username}</span>
-        <img className="w-5 h-5" src='../../public/copy_10573585.png'/>
+        <img className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
       </div>
       </td>
       <td class="px-6 py-4">
-      <div className='flex items-center'>
+      <div className='flex items-center gap-3'>
         <span>{item.password}</span>
-        <img className="w-5 h-5" src='../../public/copy_10573585.png'/>
+        <img className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
       </div>
       </td>
    
