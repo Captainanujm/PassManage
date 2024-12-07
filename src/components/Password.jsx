@@ -1,29 +1,36 @@
 import React from 'react'
 import { useRef,useState,useEffect } from 'react'
+import {ToastContainer,toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Password = () => {
     const [data,setData]=useState({site:"",username:"",password:""});
     const [savePassword,setSavePassword]=useState([]);
     useEffect(() => {
       const savedData = JSON.parse(localStorage.getItem('DataAll') || '[]');
       setSavePassword(savedData);
-    }, []); 
+    }, []);
     function handleAdd(){
      const savedData=JSON.parse(localStorage.getItem('DataAll')||JSON.stringify([]));
-     const updatedData=[...savedData,data]
+     const updatedData=[...savedData,data];
       setSavePassword(updatedData);
       localStorage.setItem('DataAll', JSON.stringify(updatedData));
       setData({ site: "", username: "", password: "" });
     
     }
     function handleChange(e){
-        setData({...data,[e.target.name]:e.target.value})
+        setData({...data,[e.target.name]:e.target.value});
     }
     const [isHidden,setIsHidden]=useState(true);
     function handleClick(){
         setIsHidden(!isHidden);
     }
     function handleCopy(item){
-      
+      navigator.clipboard.writeText(item);
+    }
+    function handleDelete(itemTOdelete){
+      const updatedPasswords = savePassword.filter((item,index) => itemTOdelete.key !== item.index);
+      setSavePassword(updatedPasswords);
+      localStorage.setItem('DataAll', JSON.stringify(updatedPasswords));
     }
   return (
     <div className="flex p-2 min-w-[720px] max-w-[720px] min-h-[610px] max-h-[610px]  justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
@@ -84,6 +91,7 @@ const Password = () => {
       <th class="px-6 py-4">Website URL</th>
       <th class="px-6 py-4">Username</th>
       <th class="px-6 py-4">Password</th>
+      <th class="px-6 py-4">Actions</th>
     </tr>
   </thead>
   <tbody class="divide-y divide-gray-200">
@@ -91,25 +99,38 @@ const Password = () => {
   
   {savePassword.map((item, index) => {
   return (
-    <tr class="hover:bg-indigo-50 transition-colors">
+    <tr key={index} className="hover:bg-indigo-50 transition-colors">
      
       <td class="px-6 py-4">
       <div className='flex items-center gap-3'>
         <span>{item.site}</span>
-        <img className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
+        <img onClick={()=>{handleCopy(item.site);
+           toast.success("Copied to clipboard");
+        }}className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
       </div>
       </td>
       <td class="px-6 py-4">
       <div className='flex items-center gap-3'>
         <span>{item.username}</span>
-        <img className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
+        <img onClick={()=>{handleCopy(item.username);
+          toast.success("Copied to clipboard");
+        }}className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
       </div>
       </td>
       <td class="px-6 py-4">
       <div className='flex items-center gap-3'>
         <span>{item.password}</span>
-        <img className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
+        <img onClick={()=>{handleCopy(item.password);
+           toast.success("Copied to clipboard");
+        }}className="w-5 h-5 cursor-pointer" src='../../public/copy_10573585.png'/>
       </div>
+      </td>
+      <td>
+        <div className='flex gap-7'>
+        <img onClick={()=>handleDelete(item)} className='h-7 w-7 cursor-pointer' src="../../public/bin.png" alt="Delete" />
+        <img  className='h-7 w-7 cursor-pointer'src="../../public/editing.png" alt="Edit"/>
+        </div>
+        
       </td>
    
   </tr>
@@ -124,6 +145,18 @@ const Password = () => {
    </div>
 
     </div>
+    <ToastContainer 
+        style={{
+          top: "50px",   
+          right: "30px", 
+        }}
+        autoClose={3000} 
+        hideProgressBar={false} 
+        closeOnClick 
+        pauseOnHover 
+        draggable 
+        theme="light"
+      />
   </div>
 
   
