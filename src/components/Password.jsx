@@ -32,6 +32,12 @@ const Password = () => {
       setSavePassword(updatedPasswords);
       localStorage.setItem('DataAll', JSON.stringify(updatedPasswords));
     }
+    function handleEdit(itemEdit){
+      setData({ site: itemEdit.site, username: itemEdit.username, password: itemEdit.password });
+      const updatedPasswords = savePassword.filter((item) => item !== itemEdit);
+  setSavePassword(updatedPasswords);
+  localStorage.setItem("DataAll", JSON.stringify(updatedPasswords));
+    }
   return (
     <div className="flex p-2 min-w-[720px] max-w-[720px] min-h-[610px] max-h-[610px]  justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
   <div className="bg-white min-w-[710px] max-w-[710px] min-h-[600px] max-h-[600px] shadow-2xl rounded-3xl p-10 flex flex-col">
@@ -128,7 +134,7 @@ const Password = () => {
       <td>
         <div className='flex gap-7'>
         <img onClick={()=>handleDelete(item)} className='h-7 w-7 cursor-pointer' src="../../public/bin.png" alt="Delete" />
-        <img  className='h-7 w-7 cursor-pointer'src="../../public/editing.png" alt="Edit"/>
+        <img onClick={()=>{handleEdit(item)}} className='h-7 w-7 cursor-pointer'src="../../public/editing.png" alt="Edit"/>
         </div>
         
       </td>
